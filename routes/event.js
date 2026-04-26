@@ -17,5 +17,20 @@ router.post("/", async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 });
+router.get("/:user_id", async (req, res) => {
+  const user_id = req.params.user_id;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM events WHERE user_id = $1 ORDER BY created_at DESC",
+      [user_id]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error fetching events" });
+  }
+});
 
 module.exports = router;
