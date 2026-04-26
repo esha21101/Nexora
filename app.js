@@ -7,6 +7,9 @@ app.use(express.json());
 const eventRoutes = require("./routes/event");
 app.use("/event", eventRoutes);
 
+const predictRoutes = require("./routes/predict");
+app.use("/predict", predictRoutes);
+
 pool.query("SELECT NOW()", (err, res) => {
   if (err) {
     console.error("DB Error", err);
